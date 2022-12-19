@@ -1,4 +1,3 @@
-const generateHTML = require('./dist/index.html');
 
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
@@ -7,6 +6,28 @@ const Intern = require('./lib/Intern');
 const fs = require('fs');
 const inquirer = require('inquirer');
 
+let finalHTMLString = '';
+
+function startHTML(){
+    return `
+    <!DOCTYPE html>
+    <html lang=“en-US”>
+    <head>
+        <meta charset="UTF-8"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <title>Team Profile</title>
+    </head>
+    <body>
+        <nav class="navbar bg-dark">
+            <div class="container-fluid justify-content-center">
+                <div class="navbar-brand m-3 text-light">
+                    <h3>My Team</h3>
+                </div>
+            </div>
+        </nav>
+
+        <main>`
+};
 
 function managerQuestions(){
     return inquirer
@@ -34,6 +55,8 @@ function managerQuestions(){
     ])
     .then((answer) => {
         const manager = new Manager(answer.managerName, answer.managerID, answer.managerEmail, answer.managerOfficeNumber);
+        let managerHTMLString = teamGenerator(manager);
+        finalHTMLString = finalHTMLString + managerHTMLString;
         addTeam();
     })
 };
@@ -49,15 +72,15 @@ function addTeam(){
           },
     ])
     .then((answer) => {
-        if (answer === `Engineer`){
+        if (answer.otherTeammates === `Engineer`){
             engineerQuestions();
-        } else if (answer === `Intern`) {
+        } else if (answer.otherTeammates === `Intern`) {
             internQuestions();
-        } else {
-            teamGenerator();
+        } else if (answer.otherTeammates === `No more`){
+            generateHTML();
         }
     })
-}
+};
 
 function engineerQuestions(){
     return inquirer
@@ -85,6 +108,8 @@ function engineerQuestions(){
     ])
     .then((answer) => {
         const engineer = new Engineer(answer.engineerName, answer.engineerID, answer.engineerEmail, answer.engineerUsername);
+        let engineerHTMLString = teamGenerator(engineer);
+        finalHTMLString = finalHTMLString + engineerHTMLString;
         addTeam();
     })
 };
@@ -115,6 +140,60 @@ function internQuestions(){
     ])
     .then((answer) => {
         const intern = new Intern(answer.internName, answer.internID, answer.internEmail, answer.internSchool);
+        let internHTMLString = teamGenerator(intern);
+        finalHTMLString = finalHTMLString + internHTMLString;
         addTeam();
     })
 };
+
+function teamGenerator(employeeObject){
+    return `
+    <div class="container mt-5">
+    <div class="row card col-4">
+        <div class="card-body bg-secondary text-light">
+            <h4>Name : ${employeeObject.getName()}</h4>
+            <h5>Role : ${employeeObject.getRole()}</h5>
+        </div>
+        <ul class="card-body list-group px-3 py-4 bg-light">
+            <li class="list-group-item">${employeeObject.getId()}</li>
+            <li class="list-group-item">${employeeObject.getEmail()}</li>
+        </ul>
+    </div>
+    </div>`
+    
+    if(answer.otherTeammates === `Manager`){
+        const li = document.createElement("li");
+        const managerOfficeNumber = document.createTextNode(${employeeObject.getGithub()});
+        li.appendChild(managerOfficeNumber);
+    }else if(answer.otherTeammates === `Engineer`){
+        const li = document.createElement("li");
+        const engineerGithub = document.createTextNode(${employeeObject.getGithub()});
+        li.appendChild(engineerGithub);
+    }else if(answer.otherTeammates === `Intern`){
+        const li = document.createElement("li");
+        const internSchool = document.createTextNode(${employeeObject.getSchool()});
+        li.appendChild(internSchool);
+    }
+};
+
+function init(startfunc){
+    let startHTML = startfunc()
+    finalHTMLString = finalHTMLString + startHTML
+    managerQuestions();
+}
+
+function generateHTML(){
+    let footerHTML = 
+    `   </main>
+        </body>
+    </html>`
+
+    finalHTMLString = finalHTMLString + footerHTML
+    fs.writeFile('./dist/index.html', finalHTMLString, function(err){
+        if(err){
+            console.log(err);
+    }
+    console.log("html generated successfully!");
+})};
+
+init(startHTML);
