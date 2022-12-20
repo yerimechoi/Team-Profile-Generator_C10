@@ -26,7 +26,7 @@ function startHTML(){
             </div>
         </nav>
 
-        <main>`
+        <main class="d-flex p-5">`
 };
 
 function managerQuestions(){
@@ -147,18 +147,18 @@ function internQuestions(){
 };
 
 function teamGenerator(employeeObject){
-    return `<div class="container mt-5">
-    <div class="row card col-4">
+    return `<div class="container m-2">
+    <div class="row card col">
         <div class="card-body bg-secondary text-light">
-            <h4>Name : ${employeeObject.getName()}</h4>
-            <h5>Role : ${employeeObject.getRole()}</h5>
+            <h4>Name: ${employeeObject.getName()}</h4>
+            <h5>Role: ${employeeObject.getRole()}</h5>
         </div>
         <ul class="card-body list-group px-3 py-4 bg-light">
-            <li class="list-group-item">${employeeObject.getId()}</li>
-            <li class="list-group-item">${employeeObject.getEmail()}</li>
-            ${employeeObject.getRole() === "Manager" ? `<li class="list-group-item">${employeeObject.getOfficeNumber()}</li>` : ''}
-            ${employeeObject.getRole() === "Engineer" ? `<li class="list-group-item">${employeeObject.getGithub()}</li>` : ''}
-            ${employeeObject.getRole() === "Intern" ? `<li class="list-group-item">${employeeObject.getSchool()}</li>` : ''}
+            <li class="list-group-item">ID: ${employeeObject.getId()}</li>
+            <li class="list-group-item">Email: ${employeeObject.getEmail()}</li>
+            ${employeeObject.getRole() === "Manager" ? `<li class="list-group-item">Office Number: ${employeeObject.getOfficeNumber()}</li>` : ''}
+            ${employeeObject.getRole() === "Engineer" ? `<li class="list-group-item">GitHub: ${employeeObject.getGithub()}</li>` : ''}
+            ${employeeObject.getRole() === "Intern" ? `<li class="list-group-item">School: ${employeeObject.getSchool()}</li>` : ''}
             
         </ul>
     </div>
