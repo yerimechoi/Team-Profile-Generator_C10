@@ -20,7 +20,7 @@
 
   <a name="mockUp"></a>
   ## Mock Up
-  The following shows the creation of a README file through node js. 
+  The following shows the creation of an HTML file that shows a team profile through node js. 
   ![MockUp](./src/10-object-oriented-programming-homework-demo.png)
 
   <a name="usage"></a>
