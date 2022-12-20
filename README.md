@@ -26,6 +26,7 @@
   <a name="usage"></a>
   ## Usage
   Enter "node index.js" in your command-line to create your team profile.
+  ![Usage](./src/usage.gif)
 
   <a name="contributions"></a>
   ## Contributions
@@ -34,8 +35,8 @@
   <a name="testInstructions"></a>
   ## Test Instructions
   Enter "npm run test" in your command-line to test out the classes.
+  ![Test](./src/test.gif)
 
   <a name="license"></a>
   ## License
-  
   N/A
