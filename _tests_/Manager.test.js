@@ -23,7 +23,7 @@ describe('Manager', () => {
 
     describe('officeNumber', () => {
         it(`returns employee's office number`, () => {
-            expect(manager.officeNumber).toBe(102);
+            expect(manager.getOfficeNumber()).toBe(102);
         });
     });
 
