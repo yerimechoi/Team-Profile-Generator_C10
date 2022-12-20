@@ -147,8 +147,7 @@ function internQuestions(){
 };
 
 function teamGenerator(employeeObject){
-    return `
-    <div class="container mt-5">
+    return `<div class="container mt-5">
     <div class="row card col-4">
         <div class="card-body bg-secondary text-light">
             <h4>Name : ${employeeObject.getName()}</h4>
@@ -157,23 +156,13 @@ function teamGenerator(employeeObject){
         <ul class="card-body list-group px-3 py-4 bg-light">
             <li class="list-group-item">${employeeObject.getId()}</li>
             <li class="list-group-item">${employeeObject.getEmail()}</li>
+            ${employeeObject.getRole() === "Manager" ? `<li class="list-group-item">${employeeObject.getOfficeNumber()}</li>` : ''}
+            ${employeeObject.getRole() === "Engineer" ? `<li class="list-group-item">${employeeObject.getGithub()}</li>` : ''}
+            ${employeeObject.getRole() === "Intern" ? `<li class="list-group-item">${employeeObject.getSchool()}</li>` : ''}
+            
         </ul>
     </div>
     </div>`
-    
-    if(answer.otherTeammates === `Manager`){
-        const li = document.createElement("li");
-        const managerOfficeNumber = document.createTextNode(${employeeObject.getGithub()});
-        li.appendChild(managerOfficeNumber);
-    }else if(answer.otherTeammates === `Engineer`){
-        const li = document.createElement("li");
-        const engineerGithub = document.createTextNode(${employeeObject.getGithub()});
-        li.appendChild(engineerGithub);
-    }else if(answer.otherTeammates === `Intern`){
-        const li = document.createElement("li");
-        const internSchool = document.createTextNode(${employeeObject.getSchool()});
-        li.appendChild(internSchool);
-    }
 };
 
 function init(startfunc){
